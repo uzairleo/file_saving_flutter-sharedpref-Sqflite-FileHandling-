@@ -26,6 +26,7 @@ dependencies:
   path_provider: any
   sqflite: any 
   csv: any
+  shared_preferences: any
 
 dev_dependencies:
   flutter_test:
