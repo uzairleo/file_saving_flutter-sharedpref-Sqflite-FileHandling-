@@ -184,11 +184,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         _tasbeehButton(
-                            hh: 80.0, ww: 80.0, tasbeeh: "Bismilliah"),
+                            hh: 80.0, ww: 80.0, tasbeeh: "images/Bismillah.png"),
                         _tasbeehButton(
-                            ww: 80.0, hh: 130.0, tasbeeh: "Astaghfar"),
+                            ww: 80.0, hh: 130.0, tasbeeh: "images/Astagfirullah.png"),
                         _tasbeehButton(
-                            ww: 80.0, hh: 80.0, tasbeeh: "subhanallah"),
+                            ww: 80.0, hh: 80.0, tasbeeh: "images/Laillaha.png"),
                        
                       ],
                     ),
@@ -197,11 +197,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         _tasbeehButton(
-                            hh: 80.0, ww: 80.0, tasbeeh: "AllahoAkbar"),
+                            hh: 80.0, ww: 80.0, tasbeeh: "images/AllahuAkbar.jpg"),
                         _tasbeehButton(
-                            ww: 80.0, hh: 130.0, tasbeeh: "Alhamdlilah"),
+                            ww: 80.0, hh: 130.0, tasbeeh: "images/Alhamdulilah2.png"),
                         _tasbeehButton(
-                            ww: 80.0, hh: 80.0, tasbeeh: "subhanallah"),
+                            ww: 80.0, hh: 80.0, tasbeeh: "images/SubhanAllah.png"),
                        
                       ],
                     ),
@@ -212,12 +212,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         _tasbeehButton(
                           ww: 110.0,
                           hh:80.0,
-                          tasbeeh: "Dua()",
+                          tasbeeh: "images/LaillahaillaAnta.png",
                         ),
                          _tasbeehButton(
                           ww: 110.0,
                           hh:80.0,
-                          tasbeeh: "AyatulKursi",
+                          tasbeeh: "images/AyatKursi.png",
                         )
                       ],
                     )
@@ -242,7 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
         
           clipBehavior: Clip.antiAliasWithSaveLayer,
         borderRadius:BorderRadius.circular(230.0),
-        child: Image(image: AssetImage("images/AllahuAkbar.jpg"),
+        child: Image(image: AssetImage(tasbeeh),
         ),
       ),
     );
