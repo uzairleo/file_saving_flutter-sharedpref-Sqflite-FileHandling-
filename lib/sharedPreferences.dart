@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Text(
-                                "Astagfar",
+                                "Astagfarr",
                                 style: TextStyle(
                                     color: Colors.white70, fontSize: 24),
                               ),
@@ -203,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         _tasbeehButton(
                             ww: 80.0, hh: 80.0, tasbeeh: "images/3.png"),
                        
-                      ],
+                      ], 
                     ),
                     SizedBox(height: 10.0,),
                     Row(
