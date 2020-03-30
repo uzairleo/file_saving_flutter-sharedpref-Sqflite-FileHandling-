@@ -122,7 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 330,
                         height: 80,
                         decoration: BoxDecoration(
-                            color: Colors.black87,
+                            color: Colors.black87
+                            ,
                             border:
                                 Border.all(color: Colors.white70, width: 4.0),
                             borderRadius: BorderRadius.circular(12.0)),
@@ -130,20 +131,26 @@ class _MyHomePageState extends State<MyHomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
+                              padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
-                                "AstaGfarr",
+                                "AstagFar",
                                 style: TextStyle(
-                                    color: Colors.white70, fontSize: 24),
+                                  fontFamily: 'SpicyRice',
+                                    color: Colors.white70, 
+                                    fontSize: 24),
                               ),
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 54, right: 0.0),
+                                  const EdgeInsets.only(left: 80, right: 0.0),
                               child: Text(
                                 "0",
                                 style: TextStyle(
-                                    color: Colors.white60, fontSize: 44),
+                                    fontFamily: 'digital-7',
+                                    color: Colors.white60,
+                                     fontSize: 47,
+                                    // fontWeight: FontWeight.bold
+                                    ),
                               ),
                             ),
                           ],
@@ -151,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Positioned(
-                      top: 110,
+                      top: 120,
                       left: 230.0,
                       child: Text(
                         "RESET",
@@ -159,8 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Positioned(
-                      top: 110,
-                      left: 80,
+                      top: 120,
+                      left: 70,
                       child: Text(
                         "COUNT",
                         style: TextStyle(color: Colors.white, fontSize: 24),
