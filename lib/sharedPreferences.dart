@@ -87,7 +87,10 @@ class _MyHomePageState extends State<MyHomePage> {
         drawer: _drawer(context),
         appBar: AppBar(
           backgroundColor: Colors.brown,
-          title: Text(widget.title),
+          title: Text(widget.title,style: TextStyle(
+            fontFamily: 'SpicyRice',
+            fontSize: 25
+          ),),
           centerTitle: true,
         ),
         body: Container(
@@ -127,51 +130,75 @@ class _MyHomePageState extends State<MyHomePage> {
                             border:
                                 Border.all(color: Colors.white70, width: 4.0),
                             borderRadius: BorderRadius.circular(12.0)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        child: Stack(
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
+                            Positioned(
+                              top: 2.0,
+                              left: 6.0,
                               child: Text(
-                                "AstagFar",
-                                style: TextStyle(
-                                  fontFamily: 'SpicyRice',
-                                    color: Colors.white70, 
-                                    fontSize: 24),
+                                  "ASTAGFAAR",
+                                  style: TextStyle(
+                                    // fontFamily: 'SpicyRice',
+                                      color: Colors.white70, 
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 80, right: 0.0),
-                              child: Text(
-                                "0",
-                                style: TextStyle(
-                                    fontFamily: 'digital-7',
-                                    color: Colors.white60,
-                                     fontSize: 47,
-                                    // fontWeight: FontWeight.bold
+                               Positioned(
+                                 top: 24,
+                                 left: 2,
+                                 right: 8.0,
+                                    child: Container(
+                                      alignment: Alignment.bottomRight,
+                                      width: 320,
+                                      decoration: BoxDecoration(
+                                        // border: Border.all(color:Colors.white,width:2.9)
+                                      ),
+                                      child: Text(
+                                  '0',
+                                  style: TextStyle(
+                                        fontFamily: 'digital-7',
+                                        color: Colors.white60,
+                                         fontSize: 52,
+                                        //  fontWeight: FontWeight.bold
+                                        // fontWeight: FontWeight.bold
+                                        ),
+                                ),
                                     ),
                               ),
-                            ),
+ 
                           ],
                         ),
                       ),
                     ),
                     Positioned(
-                      top: 120,
+                      top: 110,
                       left: 230.0,
-                      child: Text(
+                      child: FlatButton(
+                        // color: Colors.black38,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                        onPressed: (){
+                          setState(() {
+                          });
+                        }, 
+                        child: Text(
                         "RESET",
                         style: TextStyle(color: Colors.white, fontSize: 24),
-                      ),
+                      ),)
                     ),
                     Positioned(
-                      top: 120,
-                      left: 70,
-                      child: Text(
+                      top: 110,
+                      left: 50,
+                      child: FlatButton(
+                        // color: Colors.black38,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                        onPressed: (){
+                          _incrementCounter();
+                        }, 
+                        child: Text(
                         "COUNT",
                         style: TextStyle(color: Colors.white, fontSize: 24),
-                      ),
+                      ),)
                     )
                   ],
                 ),
