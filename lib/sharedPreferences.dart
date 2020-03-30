@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Text(
-                                "Astagfarr",
+                                "AstaGfarr",
                                 style: TextStyle(
                                     color: Colors.white70, fontSize: 24),
                               ),
