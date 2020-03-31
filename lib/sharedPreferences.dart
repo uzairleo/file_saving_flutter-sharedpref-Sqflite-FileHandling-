@@ -9,15 +9,23 @@ var themedataOriginal;
 var pad = 1.0;
 var flag = true;
 ///////////////////////////
-var subHanallah;
-var allahoAkbar;
-var alhamdulilah;
-var lailaha;
-var bismillah;
-var astagfar;
-var dua;
-var ayatkursi;
+var subHanallahCounter=0;
+var allahoAkbarCounter=0;
+var alhamdulilahCounter=0;
+var lailahaCounter=0;
+var bismillahCounter=0;
+var astagfarCounter=0;
+var duaCounter=0;
+var ayatkursiCounter=0;
 /////////////////////////////
+List<String> tasbeehList=[
+  'SUBHANALLAH','ALHAMDULILAH','ALLAHOAKBAR',
+  'LAILLAHA-ILALLAH','BISMILLAH','ASTAGFAAR',
+  'AYATULKURSI','DUA-E-YUNAS'
+];
+int tlistIndex=0;
+
+SharedPreferences prefs;
 class MyApps extends StatefulWidget {
   // This widget is the root of the application.
   @override
@@ -26,9 +34,7 @@ class MyApps extends StatefulWidget {
 
 class _MyAppsState extends State<MyApps> {
   ThemeData themeFunction() {
-    // var themedata;
     setState(() {
-// themedata=ThemeData.light();
       (switchValue == false)
           ? themedataOriginal = ThemeData.light()
           : themedataOriginal = ThemeData.dark();
@@ -72,21 +78,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //Loading counter value on start
   _loadCounter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+   prefs = await SharedPreferences.getInstance();
     // SharedPreferences switchPrefs=await SharedPreferences.getInstance();
     setState(() {
       _counter =
           (prefs.getInt('counter') ?? 0); // ?? 0 => this is null pointer check
+     
       // switchValue=(switchPrefs.getBool('switchvalue'));
     });
   }
 
   _incrementCounter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
     setState(() {
       _counter = (prefs.getInt('counter') ?? 0) + 1;
+      // _counter=0;
       prefs.setInt('counter', _counter);
-      (flag == true) ? flag = false : flag = true;
+      // (flag == true) ? flag = false : flag = true;
     });
   }
 
@@ -163,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             top: 2.0,
                             left: 6.0,
                             child: Text(
-                              "ASTAGFAAR",
+                              tasbeehList[tlistIndex],
                               style: TextStyle(
                                   // fontFamily: 'SpicyRice',
                                   color: Colors.black87,
@@ -183,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   // border: Border.all(color:Colors.white,width:2.9)
                                   ),
                               child: Text(
-                                '10',
+                                '$_counter',
                                 style: TextStyle(
                                   fontFamily: 'digital-7',
                                   color: Colors.black,
@@ -206,8 +214,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         // color: Colors.black38,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0)),
-                        onPressed: () {
-                          setState(() {});
+                        onPressed: () async{
+                          prefs=await SharedPreferences.getInstance();
+                            setState(() {
+                            _counter=0;
+                            prefs.setInt('counter', _counter);
+                          });
                         },
                         child: Text(
                           "RESET",
@@ -249,11 +261,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       _tasbeehButton(
-                          hh: 80.0, ww: 80.0, tasbeeh: "images/9.png"),
+                          hh: 80.0, ww: 80.0, tasbeeh: "images/9.png",
+                          ontap: (){
+                            setState(() {
+                            tlistIndex=0;
+                              
+                            });
+                          }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 130.0, tasbeeh: "images/2.png"),
+                          ww: 80.0, hh: 130.0, tasbeeh: "images/2.png",
+                          ontap: (){
+                            setState(() {
+                            tlistIndex=1;
+                            });
+                          }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 80.0, tasbeeh: "images/3.jpg"),
+                          ww: 80.0, hh: 80.0, tasbeeh: "images/3.jpg",
+                          ontap:(){
+                            setState(() {
+                              tlistIndex=2;
+                            });
+                          }),
                     ],
                   ),
                   SizedBox(
@@ -263,11 +291,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       _tasbeehButton(
-                          hh: 80.0, ww: 80.0, tasbeeh: "images/7.png"),
+                          hh: 80.0, ww: 80.0, tasbeeh: "images/7.png",
+                          ontap: (){
+                            setState(() {
+                              tlistIndex=3;
+                            });
+                          }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 130.0, tasbeeh: "images/6.png"),
+                          ww: 80.0, hh: 130.0, tasbeeh: "images/6.png",
+                          ontap: (){
+                            setState(() {
+                              tlistIndex=4;
+                            });
+                          }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 80.0, tasbeeh: "images/3.png"),
+                          ww: 80.0, hh: 80.0, tasbeeh: "images/3.png",
+                          ontap: (){
+                            setState(() {
+                              tlistIndex=5;
+                            });
+                          }),
                     ],
                   ),
                   SizedBox(
@@ -280,11 +323,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         ww: 110.0,
                         hh: 80.0,
                         tasbeeh: "images/4.png",
+                        ontap: (){
+                          setState(() {
+                            tlistIndex=6;
+                          });
+                        }
                       ),
                       _tasbeehButton(
                         ww: 110.0,
                         hh: 80.0,
                         tasbeeh: "images/8.png",
+                        ontap: (){
+                          setState(() {
+                            tlistIndex=7;
+                          });
+                        }
                       )
                     ],
                   )
@@ -297,21 +350,25 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _tasbeehButton({var hh, var ww, var tasbeeh}) {
-    return AnimatedContainer(
-      duration: Duration(microseconds: 50),
-      width: ww,
-      height: ww,
-      decoration: BoxDecoration(
-          border: Border.all(width: 2.0, color: Colors.black54),
-          shape: BoxShape.circle),
-      child: ClipRRect(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        borderRadius: BorderRadius.circular(230.0),
-        child:
-            // Text("uzairleo"),
-            Image(
-          image: AssetImage(tasbeeh),
+  _tasbeehButton({var hh, var ww, var tasbeeh,Function ontap}) {
+    return InkWell(
+      splashColor: Colors.white,
+      onTap: ontap,
+      child: AnimatedContainer(
+        duration: Duration(microseconds: 50),
+        width: ww,
+        height: ww,
+        decoration: BoxDecoration(
+            border: Border.all(width: 2.0, color: Colors.black54),
+            shape: BoxShape.circle),
+        child: ClipRRect(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          borderRadius: BorderRadius.circular(230.0),
+          child:
+              // Text("uzairleo"),
+              Image(
+            image: AssetImage(tasbeeh),
+          ),
         ),
       ),
     );
