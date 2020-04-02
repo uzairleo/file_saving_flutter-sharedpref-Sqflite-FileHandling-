@@ -27,6 +27,7 @@ dependencies:
   sqflite: any 
   csv: any
   shared_preferences: any
+  flutter_spinkit: any
 
 dev_dependencies:
   flutter_test:
