@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // void main() => runApp(MyApp());
@@ -9,23 +12,29 @@ var themedataOriginal;
 var pad = 1.0;
 var flag = true;
 ///////////////////////////
-var subHanallahCounter=0;
-var allahoAkbarCounter=0;
-var alhamdulilahCounter=0;
-var lailahaCounter=0;
-var bismillahCounter=0;
-var astagfarCounter=0;
-var duaCounter=0;
-var ayatkursiCounter=0;
+var subHanallahCounter = true;
+var allahoAkbarCounter = true;
+var alhamdulilahCounter = true;
+var lailahaCounter = true;
+var bismillahCounter = true;
+var astagfarCounter = true;
+var duaCounter = true;
+var ayatkursiCounter = true;
 /////////////////////////////
-List<String> tasbeehList=[
-  'SUBHANALLAH','ALHAMDULILAH','ALLAHOAKBAR',
-  'LAILLAHA-ILALLAH','BISMILLAH','ASTAGFAAR',
-  'AYATULKURSI','DUA-E-YUNAS'
+List<String> tasbeehList = [
+  'SUBHANALLAH',
+  'ALHAMDULILAH',
+  'ALLAHOAKBAR',
+  'LAILLAHA-ILALLAH',
+  'BISMILLAH',
+  'ASTAGFAAR',
+  'AYATULKURSI',
+  'DUA-E-YUNAS'
 ];
-int tlistIndex=0;
+int tlistIndex = 0;
 
 SharedPreferences prefs;
+
 class MyApps extends StatefulWidget {
   // This widget is the root of the application.
   @override
@@ -78,12 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //Loading counter value on start
   _loadCounter() async {
-   prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
     // SharedPreferences switchPrefs=await SharedPreferences.getInstance();
     setState(() {
       _counter =
           (prefs.getInt('counter') ?? 0); // ?? 0 => this is null pointer check
-     
+      tlistIndex = (prefs.getInt('Listindex') ?? 0);
       // switchValue=(switchPrefs.getBool('switchvalue'));
     });
   }
@@ -94,28 +103,50 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter = (prefs.getInt('counter') ?? 0) + 1;
       // _counter=0;
       prefs.setInt('counter', _counter);
+      prefs.setInt('Listindex', tlistIndex);
       // (flag == true) ? flag = false : flag = true;
     });
   }
+  List<bool> flags=[true,true,true];
 
+  resetpref(var index) async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      (flags[index]==true)?
+      flags[index]=false:
+      flags[index]=true;
+      _counter = 0;
+      prefs.setInt('counter', _counter);
+    });
+  }
+
+  var favtIcon = Icons.favorite_border;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: _drawer(context),
       appBar: AppBar(
+        // elevation: 0.0s,
         backgroundColor: Colors.brown,
-         titleSpacing: 4.0,
+        titleSpacing: 4.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.settings,color: Colors.white60,), 
-            onPressed: (){})
+              tooltip: 'favorite',
+              icon: Icon(favtIcon),
+              onPressed: () {
+                setState(() {
+                  (favtIcon == Icons.favorite_border)
+                      ? favtIcon = Icons.favorite
+                      : favtIcon = Icons.favorite_border;
+                });
+              })
         ],
         title: Text(
           widget.title,
           style: TextStyle(
-            fontFamily: 'Satisfy', 
+            fontFamily: 'Satisfy',
             fontSize: 34,
-          // fontWeight: FontWeight.bold
+            // fontWeight: FontWeight.bold
           ),
         ),
         centerTitle: true,
@@ -135,12 +166,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.brown,
                 boxShadow: [
                   BoxShadow(
-                     blurRadius: 10.0,
-                     color: Colors.black26,
-                     offset: Offset(
-                      1,12
-                     )
-                  )
+                      blurRadius: 10.0,
+                      color: Colors.black26,
+                      offset: Offset(1, 12))
                 ],
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(32.0),
@@ -158,13 +186,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: 335,
                       height: 80,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 164, 175, 135),
-                          // Colors.black87,
-                          border: Border.all(color:Colors.white54, 
-                          // Colors.white70,
-                           width: 4.0),
-                          borderRadius: BorderRadius.circular(12.0),
-                          ),
+                        color: Color.fromARGB(255, 164, 175, 135),
+                        // Colors.black87,
+                        border: Border.all(
+                            color: Colors.white54,
+                            // Colors.white70,
+                            width: 4.0),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
                       child: Stack(
                         children: <Widget>[
                           Positioned(
@@ -214,12 +243,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         // color: Colors.black38,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0)),
-                        onPressed: () async{
-                          prefs=await SharedPreferences.getInstance();
-                            setState(() {
-                            _counter=0;
-                            prefs.setInt('counter', _counter);
-                          });
+                        onPressed: () async {
+                          // resetpref();
                         },
                         child: Text(
                           "RESET",
@@ -233,11 +258,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         // color: Colors.black38,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0)),
-                        onPressed: () {
-                          _incrementCounter();
-                        },
+                        onPressed: () {},
                         child: Text(
-                          "COUNT",
+                          "SAVE",
                           style: TextStyle(color: Colors.white, fontSize: 24),
                         ),
                       ))
@@ -261,25 +284,35 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       _tasbeehButton(
-                          hh: 80.0, ww: 80.0, tasbeeh: "images/9.png",
-                          ontap: (){
+                          hh: 80.0,
+                          ww: 80.0,
+                          tasbeeh: "images/9.png",
+                          ontap: () {
                             setState(() {
-                            tlistIndex=0;
-                              
+                              tlistIndex = 0;
+                              _tasbeehTappedLogic(tlistIndex);
                             });
                           }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 130.0, tasbeeh: "images/2.png",
-                          ontap: (){
+                          ww: 80.0,
+                          hh: 130.0,
+                          tasbeeh: "images/2.png",
+                          ontap: () {
                             setState(() {
-                            tlistIndex=1;
+                              tlistIndex = 1;
+                              // _incrementCounter();
+                              _tasbeehTappedLogic(tlistIndex);
                             });
                           }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 80.0, tasbeeh: "images/3.jpg",
-                          ontap:(){
+                          ww: 80.0,
+                          hh: 80.0,
+                          tasbeeh: "images/3.jpg",
+                          ontap: () {
                             setState(() {
-                              tlistIndex=2;
+                              tlistIndex = 2;
+                              // _incrementCounter();
+                              _tasbeehTappedLogic(tlistIndex);
                             });
                           }),
                     ],
@@ -291,24 +324,33 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       _tasbeehButton(
-                          hh: 80.0, ww: 80.0, tasbeeh: "images/7.png",
-                          ontap: (){
+                          hh: 80.0,
+                          ww: 80.0,
+                          tasbeeh: "images/7.png",
+                          ontap: () {
                             setState(() {
-                              tlistIndex=3;
+                              tlistIndex = 3;
+                              _incrementCounter();
                             });
                           }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 130.0, tasbeeh: "images/6.png",
-                          ontap: (){
+                          ww: 80.0,
+                          hh: 130.0,
+                          tasbeeh: "images/6.png",
+                          ontap: () {
                             setState(() {
-                              tlistIndex=4;
+                              tlistIndex = 4;
+                              _incrementCounter();
                             });
                           }),
                       _tasbeehButton(
-                          ww: 80.0, hh: 80.0, tasbeeh: "images/3.png",
-                          ontap: (){
+                          ww: 80.0,
+                          hh: 80.0,
+                          tasbeeh: "images/3.png",
+                          ontap: () {
                             setState(() {
-                              tlistIndex=5;
+                              tlistIndex = 5;
+                              _incrementCounter();
                             });
                           }),
                     ],
@@ -320,25 +362,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       _tasbeehButton(
-                        ww: 110.0,
-                        hh: 80.0,
-                        tasbeeh: "images/4.png",
-                        ontap: (){
-                          setState(() {
-                            tlistIndex=6;
-                          });
-                        }
-                      ),
+                          ww: 110.0,
+                          hh: 80.0,
+                          tasbeeh: "images/4.png",
+                          ontap: () {
+                            setState(() {
+                              tlistIndex = 6;
+                              _incrementCounter();
+                            });
+                          }),
                       _tasbeehButton(
-                        ww: 110.0,
-                        hh: 80.0,
-                        tasbeeh: "images/8.png",
-                        ontap: (){
-                          setState(() {
-                            tlistIndex=7;
-                          });
-                        }
-                      )
+                          ww: 110.0,
+                          hh: 80.0,
+                          tasbeeh: "images/8.png",
+                          ontap: () {
+                            setState(() {
+                              tlistIndex = 7;
+                              _incrementCounter();
+                            });
+                          })
                     ],
                   )
                 ],
@@ -350,7 +392,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _tasbeehButton({var hh, var ww, var tasbeeh,Function ontap}) {
+  _tasbeehButton({var hh, var ww, var tasbeeh, Function ontap}) {
     return InkWell(
       splashColor: Colors.white,
       onTap: ontap,
@@ -365,7 +407,7 @@ class _MyHomePageState extends State<MyHomePage> {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           borderRadius: BorderRadius.circular(230.0),
           child:
-              // Text("uzairleo"),
+              // Image.asset(tasbeeh)
               Image(
             image: AssetImage(tasbeeh),
           ),
@@ -415,6 +457,30 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       )),
     );
+  }
+
+  _tasbeehTappedLogic(var index) {
+    (flags[index] == false)
+        ? _incrementCounter()
+        : showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Warning'),
+                content: Text('Do u want to leave this tasbeeh '
+                    'and start new one if u want'
+                    ' to start new one press ok otherwise to thcontinue '
+                    ' the remainng one startpress cancel'),
+                actions: <Widget>[
+                  FlatButton(
+                      onPressed: () {
+                        resetpref(index);
+                      },
+                      child: Text("OK")),
+                  FlatButton(onPressed: () {}, child: Text("cancel")),
+                ],
+              );
+            });
   }
 }
 //commit the following
