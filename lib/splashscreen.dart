@@ -34,25 +34,18 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     setState(() {
         zero = (swatch.elapsed.inSeconds % 60).toString().padLeft(2, "");
-      if (zero == '10') {
+      if (zero == '9') {
        swatch.reset();
-        // zero='0';
-      // ten=(swatch.elapsed.inSeconds%60).toString().padLeft(2,"");
-    
-      } else {
-         
-      }
+      } 
     });
   }
 
   Future<void> _callback() async {
     // print('started: ${DateTime.now()}');
     setState(() {
-      cradius = 48.0;
+      cradius = 50.0;
       hund = '1';
       ten = '0';
-      // zero = '1';
-      // textPad=60;
     });
     try {
       final ms = Random().nextInt(5000);
@@ -61,10 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
       // print('finished: ${DateTime.now()}');
       setState(() {
         cradius = 12.0;
-        // hund = '0';
-        // ten = '1';
-        // zero = '2';
-        // textPad=45;
       });
       Timer(Duration(seconds: 3), _callback);
     }
@@ -80,9 +69,9 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     Future.delayed(
         Duration(
-          seconds: 20,
+          seconds: 15,
         ), () {
-      // _screenNavigator();
+      _screenNavigator();
     });
   }
 
@@ -142,12 +131,9 @@ class _SplashScreenState extends State<SplashScreen> {
                       ])),
                 ),
               ),
-              //  CircularProgressIndicator(
-              //    backgroundColor: Colors.white,
-              //  ),
               Padding(
                 padding: const EdgeInsets.only(top: 55.0),
-                child: SpinKitPumpingHeart(
+                child: SpinKitHourGlass(
                   color: Colors.redAccent,
                   size: 40,
                 ),
