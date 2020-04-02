@@ -3,11 +3,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:saving_file_locally/sharedPreferences.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 double cradius = 12.0;
 var hund = '0';
 var ten = '1';
-var zero = '1';
+var zero = "00";
 var textPad=45.0;
 
 class SplashScreen extends StatefulWidget {
@@ -16,13 +17,34 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  var swatch=new Stopwatch();
+  
+  startStopWatch()
+  {
+    swatch.start();
+    startTimer();
+  }
+  startTimer(){
+    Timer(Duration(seconds:1),keepRunning);
+  }
+  keepRunning()
+  {
+    if(swatch.isRunning)
+    {
+        startTimer();
+    }
+    setState(() {
+      zero=(swatch.elapsed.inSeconds%60).toString().padLeft(2,"0");
+    });
+  }
+  
   Future<void> _callback() async {
     // print('started: ${DateTime.now()}');
     setState(() {
       cradius = 48.0;
       hund = '1';
       ten = '0';
-      zero = '1';
+      // zero = '1';
       // textPad=60;
     });
     try {
@@ -32,9 +54,9 @@ class _SplashScreenState extends State<SplashScreen> {
       // print('finished: ${DateTime.now()}');
       setState(() {
         cradius = 12.0;
-        hund = '0';
-        ten = '1';
-        zero = '2';
+        // hund = '0';
+        // ten = '1';
+        // zero = '2';
         // textPad=45;
       });
       Timer(Duration(seconds: 3), _callback);
@@ -44,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // startStopWatch();
     Timer.periodic(Duration(seconds: 4), (c) {
       _callback();
     });
@@ -52,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
           seconds: 20,
         ), () {
           
-      _screenNavigator();
+      // _screenNavigator();
     });
   }
 
@@ -60,7 +83,12 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => (MyApps())));
   }
-
+@override
+void dispose() {
+    super.dispose();
+    swatch.stop();
+    swatch.reset();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   children: <Widget>[
                     _customContainer(hund, 'HUND'),
                     _customContainer(ten, 'TEN'),
-                    _customContainer(zero, 'ZERO'),
+                    _customContainer(zero, 'UNIT'),
                   ],
                 ),
               ),
@@ -109,7 +137,21 @@ class _SplashScreenState extends State<SplashScreen> {
               //    backgroundColor: Colors.white,
               //  ),
               Padding(
-                padding: const EdgeInsets.only(top: 155.0),
+                padding:const EdgeInsets.only(top: 55.0),
+                child:GestureDetector(
+                  onTap: (){
+                    print("yes i m working babes");
+                    startStopWatch();
+                  },
+                                  child: SpinKitPumpingHeart(
+                    color: Colors.redAccent,
+                    size: 40,
+                    ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 62.0),
                 child: Text(
                   '\t\t\t\t\t\t\tVersion 1.0 \n @uzairleo/Software',
                   style: TextStyle(
