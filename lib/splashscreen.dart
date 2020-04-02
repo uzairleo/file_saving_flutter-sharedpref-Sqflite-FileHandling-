@@ -9,7 +9,7 @@ double cradius = 12.0;
 var hund = '0';
 var ten = '1';
 var zero = "00";
-var textPad=45.0;
+var textPad = 45.0;
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -17,27 +17,34 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  var swatch=new Stopwatch();
-  
-  startStopWatch()
-  {
+  var swatch = new Stopwatch();
+
+  startStopWatch() {
     swatch.start();
     startTimer();
   }
-  startTimer(){
-    Timer(Duration(seconds:1),keepRunning);
+
+  startTimer() {
+    Timer(Duration(seconds: 1), keepRunning);
   }
-  keepRunning()
-  {
-    if(swatch.isRunning)
-    {
-        startTimer();
+
+  keepRunning() {
+    if (swatch.isRunning) {
+      startTimer();
     }
     setState(() {
-      zero=(swatch.elapsed.inSeconds%60).toString().padLeft(2,"0");
+        zero = (swatch.elapsed.inSeconds % 60).toString().padLeft(2, "");
+      if (zero == '10') {
+       swatch.reset();
+        // zero='0';
+      // ten=(swatch.elapsed.inSeconds%60).toString().padLeft(2,"");
+    
+      } else {
+         
+      }
     });
   }
-  
+
   Future<void> _callback() async {
     // print('started: ${DateTime.now()}');
     setState(() {
@@ -66,7 +73,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // startStopWatch();
+    startStopWatch();
+
     Timer.periodic(Duration(seconds: 4), (c) {
       _callback();
     });
@@ -74,7 +82,6 @@ class _SplashScreenState extends State<SplashScreen> {
         Duration(
           seconds: 20,
         ), () {
-          
       // _screenNavigator();
     });
   }
@@ -83,12 +90,14 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => (MyApps())));
   }
-@override
-void dispose() {
+
+  @override
+  void dispose() {
     super.dispose();
     swatch.stop();
     swatch.reset();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +121,7 @@ void dispose() {
               ),
               AnimatedContainer(
                 height: 130.0,
-                duration:Duration(seconds:2),
+                duration: Duration(seconds: 2),
                 child: Padding(
                   padding: EdgeInsets.only(top: 33),
                   child: RichText(
@@ -137,16 +146,10 @@ void dispose() {
               //    backgroundColor: Colors.white,
               //  ),
               Padding(
-                padding:const EdgeInsets.only(top: 55.0),
-                child:GestureDetector(
-                  onTap: (){
-                    print("yes i m working babes");
-                    startStopWatch();
-                  },
-                                  child: SpinKitPumpingHeart(
-                    color: Colors.redAccent,
-                    size: 40,
-                    ),
+                padding: const EdgeInsets.only(top: 55.0),
+                child: SpinKitPumpingHeart(
+                  color: Colors.redAccent,
+                  size: 40,
                 ),
               ),
 

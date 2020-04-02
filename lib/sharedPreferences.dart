@@ -109,12 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   List<bool> flags=[true,true,true];
 
-  resetpref(var index) async {
+  resetpref() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
-      (flags[index]==true)?
-      flags[index]=false:
-      flags[index]=true;
+      // (flags[index]==true)?
+      // flags[index]=false:
+      // flags[index]=true;
       _counter = 0;
       prefs.setInt('counter', _counter);
     });
@@ -244,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0)),
                         onPressed: () async {
-                          // resetpref();
+                          resetpref();
                         },
                         child: Text(
                           "RESET",
@@ -290,7 +290,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           ontap: () {
                             setState(() {
                               tlistIndex = 0;
-                              _tasbeehTappedLogic(tlistIndex);
                             });
                           }),
                       _tasbeehButton(
@@ -300,8 +299,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ontap: () {
                             setState(() {
                               tlistIndex = 1;
-                              // _incrementCounter();
-                              _tasbeehTappedLogic(tlistIndex);
+                              _incrementCounter();
                             });
                           }),
                       _tasbeehButton(
@@ -311,8 +309,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ontap: () {
                             setState(() {
                               tlistIndex = 2;
-                              // _incrementCounter();
-                              _tasbeehTappedLogic(tlistIndex);
+                              _incrementCounter();
                             });
                           }),
                     ],
@@ -459,29 +456,29 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _tasbeehTappedLogic(var index) {
-    (flags[index] == false)
-        ? _incrementCounter()
-        : showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Warning'),
-                content: Text('Do u want to leave this tasbeeh '
-                    'and start new one if u want'
-                    ' to start new one press ok otherwise to thcontinue '
-                    ' the remainng one startpress cancel'),
-                actions: <Widget>[
-                  FlatButton(
-                      onPressed: () {
-                        resetpref(index);
-                      },
-                      child: Text("OK")),
-                  FlatButton(onPressed: () {}, child: Text("cancel")),
-                ],
-              );
-            });
-  }
+  // _tasbeehTappedLogic(var index) {
+  //   (flags[index] == false)
+  //       ? _incrementCounter()
+  //       : showDialog(
+  //           context: context,
+  //           builder: (BuildContext context) {
+  //             return AlertDialog(
+  //               title: Text('Warning'),
+  //               content: Text('Do u want to leave this tasbeeh '
+  //                   'and start new one if u want'
+  //                   ' to start new one press ok otherwise to thcontinue '
+  //                   ' the remainng one startpress cancel'),
+  //               actions: <Widget>[
+  //                 FlatButton(
+  //                     onPressed: () {
+  //                       resetpref(index);
+  //                     },
+  //                     child: Text("OK")),
+  //                 FlatButton(onPressed: () {}, child: Text("cancel")),
+  //               ],
+  //             );
+  //           });
+  // }
 }
 //commit the following
 
