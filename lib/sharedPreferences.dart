@@ -429,22 +429,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _drawer(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 2 / 3,
-      color: Colors.amber,
-      child: Drawer(
-          child: Column(
+      width: MediaQuery.of(context).size.width * 2 / 3.6,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(85.0),
+              topRight: Radius.circular(85.0))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          UserAccountsDrawerHeader(
-              arrowColor: Colors.brown,
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white54,
-                child: FlutterLogo(
-                  size: 44,
-                ),
-              ),
-              accountName: Text("Uzairleo"),
-              accountEmail: Text("uzair.jan336@gmail.com")),
-          ListTile(
+          Container(
+            height: 200,
+            width: MediaQuery.of(context).size.width * 2 / 3.6,
+            decoration: BoxDecoration(
+                color: Colors.brown,
+                borderRadius:
+                    BorderRadius.only(topRight: Radius.circular(85.0))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  radius: 50,
+                    child: CircleAvatar(
+                    radius: 45.0,
+                      child: Image(image: AssetImage('images/10leo.png'))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:8.0),
+                      child: Text("UzairLeo",style: TextStyle(color: Colors.white70),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:4.0,bottom: 8.0),
+                      child: Text("uzair.jan336@gmail.com",style: TextStyle(color: Colors.white70),),
+                    ),
+                    
+              ],
+            ),
+          ), ListTile(
             leading: Icon(Icons.home),
             title: Text("Home"),
             onTap: () {
@@ -481,7 +505,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Column(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
                                 "About me",
@@ -491,7 +515,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     fontFamily: 'Satisfy'),
                               ),
                               Padding(
-                                padding:EdgeInsets.all(12.0),
+                                padding: EdgeInsets.all(12.0),
                                 child: Text(
                                   'I am Uzairleo from Islamia College Peshawar.'
                                   'I am a software engineer who love his work '
@@ -520,22 +544,26 @@ class _MyHomePageState extends State<MyHomePage> {
                                   IconButton(
                                       icon: Icon(FontAwesomeIcons.facebook),
                                       onPressed: () {
-                                        _urlLauncher("http://www.facebook.com");
+                                        _urlLauncher(
+                                            "https://web.facebook.com/uzairleo.336");
                                       }),
                                   IconButton(
                                       icon: Icon(FontAwesomeIcons.youtube),
                                       onPressed: () {
-                                        _urlLauncher("http://www.youtube.com");
+                                        _urlLauncher(
+                                            "https://www.youtube.com/channel/UCbLTPRCpnfaJujz9ApONdAw");
                                       }),
                                   IconButton(
                                       icon: Icon(FontAwesomeIcons.github),
                                       onPressed: () {
-                                        _urlLauncher("http://www.github.com/uzairleo");
+                                        _urlLauncher(
+                                            "https://github.com/uzairleo/file_saving_flutter-sharedpref-Sqflite-FileHandling-");
                                       }),
                                   IconButton(
-                                      icon: Icon(Icons.mail), 
+                                      icon: Icon(Icons.mail),
                                       onPressed: () {
-                                        _urlLauncher("http://www.gmail.com/");
+                                        _urlLauncher(
+                                            "https://mail.google.com/mail/u/0/#inbox");
                                       }),
                                 ],
                               )
@@ -552,18 +580,20 @@ class _MyHomePageState extends State<MyHomePage> {
             onTap: () {
               exit(0);
             },
-          )
+          ),
+          Padding(padding: const EdgeInsets.only(top:80.0,left: 40.0),
+          child:Text("Version 1.0",style: TextStyle(fontSize: 12.0),))
         ],
-      )),
+      ),
     );
   }
-  _urlLauncher(var url)async {
-      if(await canLaunch(url)){
-        await launch(url);
-      }else
-      {
-              throw "Invalid url Sorry!";
-      }
+
+  _urlLauncher(var url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw "Invalid url Sorry!";
+    }
   }
 }
 
