@@ -107,7 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // (flag == true) ? flag = false : flag = true;
     });
   }
-  List<bool> flags=[true,true,true];
+
+  List<bool> flags = [true, true, true];
 
   resetpref() async {
     prefs = await SharedPreferences.getInstance();
@@ -258,7 +259,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         // color: Colors.black38,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0)),
-                        onPressed: () {},
+                        onPressed: () {
+                          _save();
+                        },
                         child: Text(
                           "SAVE",
                           style: TextStyle(color: Colors.white, fontSize: 24),
@@ -290,6 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ontap: () {
                             setState(() {
                               tlistIndex = 0;
+                              _incrementCounter();
                             });
                           }),
                       _tasbeehButton(
@@ -389,6 +393,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  _save() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SaveDiloge();
+        });
+  }
+
   _tasbeehButton({var hh, var ww, var tasbeeh, Function ontap}) {
     return InkWell(
       splashColor: Colors.white,
@@ -415,8 +427,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _drawer(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 2 / 3,
-      color: Colors.white,
+      width: MediaQuery.of(context).size.width *2/3,
+      color: Colors.amber,
+
       child: Drawer(
           child: Column(
         children: <Widget>[
@@ -430,56 +443,182 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               accountName: Text("Uzairleo"),
               accountEmail: Text("uzair.jan336@gmail.com")),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("Home"),
+                onTap: (){Navigator.pop(context);},
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.save),
+                title:Text("Saved tasbeeh"),
+                onTap:(){}
+              ),//saved
+              Divider(),
+              ListTile(
+                leading:Icon(Icons.settings),
+                title:Text("Settings"),
+                onTap: (){},
+              ),//Setting
+              Divider(),
           ListTile(
             title: Text(
-              "Dark Theme",
-              style: Theme.of(context).textTheme.title,
+              "Theme",
             ),
-            trailing: Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+            trailing:Padding(
+              padding: const EdgeInsets.only(left:15.0),
               child: Switch(
-                  value: switchValue,
-                  onChanged: (value) {
-                    setState(() {
-                      switchValue = value;
-                      // themefunction();
-                      // (switchValue==true)?
-                      // themeColor=Colors.grey:
-                      // themeColor=Colors.white;
-                    });
-                    themefunction();
-                  }),
+                    value: switchValue,
+                    onChanged: (value) {
+                      setState(() {
+                        switchValue = value;
+                        // themefunction();
+                        // (switchValue==true)?
+                        // themeColor=Colors.grey:
+                        // themeColor=Colors.white;
+                      });
+                      themefunction();
+                    }),
             ),
-          ),
+                  leading:Icon(Icons.format_paint),
+            ),
+          Divider(),
+          ListTile(
+            leading:Icon(Icons.exit_to_app),
+            title:Text("Quit App"),
+            onTap: (){
+              exit(0);
+            },
+          )
         ],
       )),
     );
   }
-
-  // _tasbeehTappedLogic(var index) {
-  //   (flags[index] == false)
-  //       ? _incrementCounter()
-  //       : showDialog(
-  //           context: context,
-  //           builder: (BuildContext context) {
-  //             return AlertDialog(
-  //               title: Text('Warning'),
-  //               content: Text('Do u want to leave this tasbeeh '
-  //                   'and start new one if u want'
-  //                   ' to start new one press ok otherwise to thcontinue '
-  //                   ' the remainng one startpress cancel'),
-  //               actions: <Widget>[
-  //                 FlatButton(
-  //                     onPressed: () {
-  //                       resetpref(index);
-  //                     },
-  //                     child: Text("OK")),
-  //                 FlatButton(onPressed: () {}, child: Text("cancel")),
-  //               ],
-  //             );
-  //           });
-  // }
 }
+
+class SaveDiloge extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Dialog(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: EdgeInsets.only(left: 4.0),
+          height: 160,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(145.0),
+                bottomLeft: Radius.circular(145.0),
+                bottomRight: Radius.circular(12.0),
+                topRight: Radius.circular(12.0),
+              )),
+          child: Row(children: <Widget>[
+            Expanded(
+                child: CircleAvatar(
+              radius: 59,
+              backgroundColor: Colors.black12,
+              child: CircleAvatar(
+                radius: 28,
+                backgroundColor: Colors.green,
+                child: Center(
+                  child: Icon(
+                    Icons.done,
+                    size: 28.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )),
+            Expanded(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 0.0),
+                    child: Text(
+                      "Status",
+                      style: TextStyle(
+                        fontSize: 28.0,
+                        fontFamily: 'Satisfy',
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                 'Your tasbeeh was saved Successfully press '
+                 'press ok to continue Zikar',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        // fontFamily: 'Satisfy',
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(""),
+                        //                      RaisedButton(
+                        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                        // child: Text("OK"),
+                        // onPressed:(){}),
+                      ),
+                      SizedBox(
+                        width: 12.0,
+                      ),
+                      Expanded(
+                        flex:2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0,left:0.0),
+                          child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0)),
+                              child: Text("OK "),
+                              colorBrightness: Brightness.light,
+                              color: Colors.red,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }),
+                        ),
+                      ),
+                      // RaisedButton(onPressed: null),
+                    ],
+                  )
+                ]))
+          ]),
+        ),
+      ),
+    );
+  }
+}
+// _tasbeehTappedLogic(var index) {
+//   (flags[index] == false)
+//       ? _incrementCounter()
+//       : showDialog(
+//           context: context,
+//           builder: (BuildContext context) {
+//             return AlertDialog(
+//               title: Text('Warning'),
+//               content: Text('Do u want to leave this tasbeeh '
+//                   'and start new one if u want'
+//                   ' to start new one press ok otherwise to thcontinue '
+//                   ' the remainng one startpress cancel'),
+//               actions: <Widget>[
+//                 FlatButton(
+//                     onPressed: () {
+//                       resetpref(index);
+//                     },
+//                     child: Text("OK")),
+//                 FlatButton(onPressed: () {}, child: Text("cancel")),
+//               ],
+//             );
+//           });
+// }
 //commit the following
 
 //1-Dynamic Theming using inherited Models
