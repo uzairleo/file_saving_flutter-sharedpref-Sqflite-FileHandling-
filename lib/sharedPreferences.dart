@@ -581,7 +581,7 @@ class _MyHomePageState extends State<MyHomePage> {
               exit(0);
             },
           ),
-          Padding(padding: const EdgeInsets.only(top:80.0,left: 40.0),
+          Padding(padding: const EdgeInsets.only(top:80.0,left: 20.0),
           child:Text("Version 1.0",style: TextStyle(fontSize: 12.0),))
         ],
       ),

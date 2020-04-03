@@ -29,6 +29,8 @@ dependencies:
   shared_preferences: any
   flutter_spinkit: any
   font_awesome_flutter: any
+  url_launcher: any
+  flutter_launcher_icons: any
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +41,11 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+flutter_icons:
+    android: true
+    ios: true
+    image_path: "images/1.png"
+  
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -73,6 +80,5 @@ flutter:
         - asset: fonts/Satisfy-Regular.ttf
         # - asset: fonts/Satisfy-Regular.ttf
   #         weight: 700
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
