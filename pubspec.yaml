@@ -28,6 +28,7 @@ dependencies:
   csv: any
   shared_preferences: any
   flutter_spinkit: any
+  font_awesome_flutter: any
 
 dev_dependencies:
   flutter_test:
