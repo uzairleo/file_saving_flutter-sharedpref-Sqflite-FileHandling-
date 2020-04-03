@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // void main() => runApp(MyApp());
 bool switchValue = false;
@@ -427,9 +429,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _drawer(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width *2/3,
+      width: MediaQuery.of(context).size.width * 2 / 3,
       color: Colors.amber,
-
       child: Drawer(
           child: Column(
         children: <Widget>[
@@ -443,55 +444,176 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               accountName: Text("Uzairleo"),
               accountEmail: Text("uzair.jan336@gmail.com")),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: Text("Home"),
-                onTap: (){Navigator.pop(context);},
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.save),
-                title:Text("Saved tasbeeh"),
-                onTap:(){}
-              ),//saved
-              Divider(),
-              ListTile(
-                leading:Icon(Icons.settings),
-                title:Text("Settings"),
-                onTap: (){},
-              ),//Setting
-              Divider(),
           ListTile(
-            title: Text(
-              "Theme",
-            ),
-            trailing:Padding(
-              padding: const EdgeInsets.only(left:15.0),
-              child: Switch(
-                    value: switchValue,
-                    onChanged: (value) {
-                      setState(() {
-                        switchValue = value;
-                        // themefunction();
-                        // (switchValue==true)?
-                        // themeColor=Colors.grey:
-                        // themeColor=Colors.white;
-                      });
-                      themefunction();
-                    }),
-            ),
-                  leading:Icon(Icons.format_paint),
-            ),
+            leading: Icon(Icons.home),
+            title: Text("Home"),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ), //saved
           Divider(),
           ListTile(
-            leading:Icon(Icons.exit_to_app),
-            title:Text("Quit App"),
-            onTap: (){
+            leading: Icon(Icons.settings),
+            title: Text("Settings"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          (Settings(themefunction))));
+            },
+          ), //Setting
+          Divider(),
+          ListTile(
+              leading: Icon(Icons.info),
+              title: Text("About me"),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        elevation: 0.0,
+                        backgroundColor: Colors.transparent,
+                        child: Container(
+                          height: 300.0,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Column(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "About me",
+                                style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Satisfy'),
+                              ),
+                              Padding(
+                                padding:EdgeInsets.all(12.0),
+                                child: Text(
+                                  'I am Uzairleo from Islamia College Peshawar.'
+                                  'I am a software engineer who love his work '
+                                  'as well as Flutter Developer expert for '
+                                  'Android/Cross platform Application.Search'
+                                  'engine Optimizer as well as Graphics Designer. '
+                                  ' Still building up or learning some more skills',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 18.0),
+                                child: Text(
+                                  "Contact me",
+                                  style: TextStyle(
+                                      fontSize: 24.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Satisfy'),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  IconButton(
+                                      icon: Icon(FontAwesomeIcons.facebook),
+                                      onPressed: () {
+                                        _urlLauncher("http://www.facebook.com");
+                                      }),
+                                  IconButton(
+                                      icon: Icon(FontAwesomeIcons.youtube),
+                                      onPressed: () {
+                                        _urlLauncher("http://www.youtube.com");
+                                      }),
+                                  IconButton(
+                                      icon: Icon(FontAwesomeIcons.github),
+                                      onPressed: () {
+                                        _urlLauncher("http://www.github.com/uzairleo");
+                                      }),
+                                  IconButton(
+                                      icon: Icon(Icons.mail), 
+                                      onPressed: () {
+                                        _urlLauncher("http://www.gmail.com/");
+                                      }),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              }),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text("Quit App"),
+            onTap: () {
               exit(0);
             },
           )
         ],
       )),
+    );
+  }
+  _urlLauncher(var url)async {
+      if(await canLaunch(url)){
+        await launch(url);
+      }else
+      {
+              throw "Invalid url Sorry!";
+      }
+  }
+}
+
+class Settings extends StatefulWidget {
+  final Function themefunction;
+  Settings(this.themefunction);
+  @override
+  _SettingsState createState() => _SettingsState(themefunction);
+}
+
+class _SettingsState extends State<Settings> {
+  var themefunction;
+  _SettingsState(this.themefunction);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.brown,
+        title: Text("Settings"),
+      ),
+      body: Column(
+        children: <Widget>[
+          ListTile(
+            title: Text(
+              "Theme",
+            ),
+            trailing: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Switch(
+                  value: switchValue,
+                  onChanged: (value) {
+                    setState(() {
+                      switchValue = value;
+                      // themefunction();
+                      // (switchValue==true)?
+                      // themeColor=Colors.grey:
+                      // themeColor=Colors.white;
+                    });
+                    themefunction();
+                  }),
+            ),
+            leading: Icon(Icons.format_paint),
+          ),
+          Divider(),
+          ListTile(
+              leading: Icon(Icons.font_download),
+              title: Text("Large Fonts"),
+              onTap: () {}),
+        ],
+      ),
     );
   }
 }
@@ -548,8 +670,8 @@ class SaveDiloge extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                 'Your tasbeeh was saved Successfully press '
-                 'press ok to continue Zikar',
+                      'Your tasbeeh was saved Successfully press '
+                      'press ok to continue Zikar',
                       style: TextStyle(
                         fontSize: 14.0,
                         // fontFamily: 'Satisfy',
@@ -572,9 +694,9 @@ class SaveDiloge extends StatelessWidget {
                         width: 12.0,
                       ),
                       Expanded(
-                        flex:2,
+                        flex: 2,
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0,left:0.0),
+                          padding: const EdgeInsets.only(right: 8.0, left: 0.0),
                           child: RaisedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0)),
